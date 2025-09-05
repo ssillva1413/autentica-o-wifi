@@ -50,7 +50,6 @@ document.querySelector("form").addEventListener("submit", async function(e) {
     if (response.ok) {
       alert(result.message || "Cadastro realizado com sucesso!");
       
-      // LIMPAR O FORMULÁRIO APÓS SUCESSO ← ADICIONE ESTAS LINHAS
       document.getElementById("nome").value = "";
       document.getElementById("convenio").value = "";
       document.getElementById("telefone").value = "";
