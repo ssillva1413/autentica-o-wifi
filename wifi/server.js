@@ -1,20 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('cors'); 
 const pool = require('./db');
 
 const app = express();
 const port = 3000;
 
-// Middlewares
-app.use(cors());
+app.use(cors()); 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Rota para salvar credenciais
 app.post('/cadastro', async (req, res) => {
   const { nome, convenio, telefone } = req.body;
-
+  
   if (!nome || !convenio || !telefone) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
   }
@@ -24,7 +22,7 @@ app.post('/cadastro', async (req, res) => {
       'INSERT INTO credenciais_wifi (nome_paciente, convenio, telefone) VALUES ($1, $2, $3) RETURNING *',
       [nome, convenio, telefone]
     );
-
+    
     res.status(201).json({
       message: 'Cadastro realizado com sucesso!',
       data: result.rows[0],

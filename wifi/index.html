@@ -8,8 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <!-- Adicione a logo aqui -->
+        <div class="logo">  
             <img src="img/Logo.jpg" alt="Logo do Hospital">
         </div>
         <form class="wifi-form" action="#" method="post">
@@ -33,27 +32,38 @@
         </form>
     </div>
     <script>
-  document.querySelector("form").addEventListener("submit", async function(e) {
-    e.preventDefault();
+document.querySelector("form").addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-    const nome = document.getElementById("nome").value;
-    const convenio = document.getElementById("convenio").value;
-    const telefone = document.getElementById("telefone").value;
+  const nome = document.getElementById("nome").value; 
+  const convenio = document.getElementById("convenio").value;
+  const telefone = document.getElementById("telefone").value;
 
-    try {
-      const response = await fetch("http://localhost:3000/cadastro", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, convenio, telefone }),
-      });
+  try {
+    const response = await fetch("http://localhost:3000/cadastro", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, convenio, telefone }),
+    });
 
-      const result = await response.json();
-      alert(result.message || result.error);
-    } catch (error) {
-      alert("Erro ao enviar cadastro!");
-      console.error(error);
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message || "Cadastro realizado com sucesso!");
+      
+      // LIMPAR O FORMULÁRIO APÓS SUCESSO ← ADICIONE ESTAS LINHAS
+      document.getElementById("nome").value = "";
+      document.getElementById("convenio").value = "";
+      document.getElementById("telefone").value = "";
+      
+    } else {
+      alert("Erro: " + (result.error || "Erro no cadastro"));
     }
-  });
+    
+  } catch (error) {
+    alert("Erro ao enviar cadastro!");
+    console.error(error);
+  }
+});
 </script>
 
 </body>
